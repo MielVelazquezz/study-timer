@@ -1,0 +1,8 @@
+node_modules
+main.js
+*.map
+data.json
+.vscode
+.idea
+*.iml
+.DS_Store

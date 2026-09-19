@@ -1,0 +1,32 @@
+{
+  "name": "study-timer",
+  "version": "1.1.0",
+  "description": "Study timer inspired by Yeolpumta (YPT): stopwatch, Pomodoro, study history, and heatmap, integrated with Daily Notes.",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "node esbuild.config.mjs production"
+  },
+  "keywords": [
+    "obsidian",
+    "obsidian-plugin",
+    "study",
+    "pomodoro",
+    "timer",
+    "stopwatch"
+  ],
+  "author": "Miel Velazquez",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "builtin-modules": "^3.3.0",
+    "esbuild": "0.19.11",
+    "obsidian": "latest",
+    "tslib": "2.6.2",
+    "typescript": "5.3.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MielVelazquezz/study-timer.git"
+  }
+}
