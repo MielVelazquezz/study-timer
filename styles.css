@@ -1,0 +1,642 @@
+.ypt-root {
+  --ypt-accent: var(--interactive-accent);
+  --ypt-on-accent: var(--text-on-accent);
+  /* Versões translúcidas do destaque (fallback para navegadores sem color-mix) */
+  --ypt-accent-15: hsla(var(--accent-h), var(--accent-s), var(--accent-l), 0.15);
+  --ypt-accent-25: hsla(var(--accent-h), var(--accent-s), var(--accent-l), 0.25);
+  --ypt-accent-50: hsla(var(--accent-h), var(--accent-s), var(--accent-l), 0.5);
+  --ypt-accent-75: hsla(var(--accent-h), var(--accent-s), var(--accent-l), 0.75);
+  --ypt-radius: 14px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 12px 4px 24px 4px;
+  color: var(--text-normal);
+}
+
+@supports (color: color-mix(in srgb, red 50%, transparent)) {
+  .ypt-root {
+    --ypt-accent-15: color-mix(in srgb, var(--ypt-accent) 15%, transparent);
+    --ypt-accent-25: color-mix(in srgb, var(--ypt-accent) 25%, transparent);
+    --ypt-accent-50: color-mix(in srgb, var(--ypt-accent) 50%, transparent);
+    --ypt-accent-75: color-mix(in srgb, var(--ypt-accent) 75%, transparent);
+  }
+}
+
+/* ---------- Cabeçalho ---------- */
+
+.ypt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ypt-title {
+  font-size: 1.1em;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.ypt-mode-toggle {
+  display: flex;
+  background: var(--background-secondary);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.ypt-mode-toggle button {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.78em;
+  padding: 5px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.ypt-mode-toggle button.ypt-mode-active {
+  background: var(--ypt-accent);
+  color: var(--ypt-on-accent);
+  font-weight: 600;
+}
+
+/* ---------- Assuntos ---------- */
+
+.ypt-assuntos-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ypt-materia-label {
+  font-size: 0.72em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ypt-assuntos {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ypt-assuntos-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.ypt-assunto-row {
+  --ypt-assunto-cor: var(--text-faint);
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.ypt-assunto-row::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--ypt-assunto-cor);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ypt-assunto-row:hover {
+  border-color: var(--background-modifier-border-hover);
+}
+
+.ypt-assunto-row.ypt-assunto-selected {
+  border-color: var(--ypt-assunto-cor);
+}
+
+.ypt-assunto-row.ypt-assunto-selected::before {
+  opacity: 0.14;
+}
+
+.ypt-assunto-nome {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.9em;
+}
+
+.ypt-assunto-color {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  overflow: hidden;
+}
+
+.ypt-assunto-color::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.ypt-assunto-color::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+.ypt-assunto-color::-moz-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+.ypt-assunto-del {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-faint);
+  font-size: 1.15em;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ypt-assunto-del:hover {
+  color: var(--text-error);
+  background: transparent;
+}
+
+.ypt-assunto-add {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ypt-assunto-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.ypt-assunto-add-btn {
+  flex: none;
+}
+
+.ypt-subject-dot {
+  display: inline-block;
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--text-faint);
+}
+
+.ypt-current-subject {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  max-width: 100%;
+  font-size: 0.85em;
+  color: var(--text-muted);
+}
+
+.ypt-current-subject-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ypt-current-subject-time {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-normal);
+  font-weight: 600;
+}
+
+.ypt-materia-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--background-secondary);
+  border-radius: var(--ypt-radius);
+  padding: 10px 12px;
+}
+
+.ypt-materia-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85em;
+}
+
+.ypt-materia-nome {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  color: var(--text-normal);
+}
+
+.ypt-materia-tempo {
+  color: var(--ypt-accent);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.ypt-materia-empty {
+  font-size: 0.8em;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 4px 0;
+}
+
+/* ---------- Badge de fase (Pomodoro) ---------- */
+
+.ypt-phase-badge {
+  align-self: center;
+  font-size: 0.8em;
+  font-weight: 600;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: var(--ypt-accent-15);
+  color: var(--ypt-accent);
+  display: none;
+}
+
+.ypt-phase-badge.ypt-phase-break {
+  background: rgba(var(--color-orange-rgb), 0.15);
+  color: var(--color-orange);
+}
+
+/* ---------- Card do cronômetro ---------- */
+
+.ypt-timer-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  background: var(--background-secondary);
+  border-radius: var(--ypt-radius);
+  padding: 28px 16px;
+}
+
+.ypt-ring {
+  --ypt-progress: 0;
+  position: relative;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: conic-gradient(
+    var(--ypt-accent) calc(var(--ypt-progress) * 360deg),
+    var(--background-modifier-border) 0deg
+  );
+  transition: background 0.3s linear;
+}
+
+.ypt-ring::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  background: var(--background-secondary);
+}
+
+.ypt-ring-fill {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.ypt-ring-center {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ypt-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 1.55em;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.ypt-play-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--ypt-accent);
+  color: var(--ypt-on-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3em;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.15s ease, filter 0.15s ease;
+  box-shadow: 0 6px 18px var(--ypt-accent-25);
+}
+
+.ypt-play-btn:hover {
+  filter: brightness(1.08);
+  transform: scale(1.04);
+}
+
+.ypt-play-btn:active {
+  transform: scale(0.96);
+}
+
+.ypt-pomo-config {
+  display: flex;
+  gap: 16px;
+}
+
+.ypt-pomo-input-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.ypt-pomo-input-wrap label {
+  font-size: 0.72em;
+  color: var(--text-muted);
+}
+
+.ypt-pomo-input-wrap input {
+  width: 56px;
+  text-align: center;
+  border-radius: 8px;
+}
+
+/* ---------- Estatísticas ---------- */
+
+.ypt-stats-row {
+  display: flex;
+  gap: 10px;
+}
+
+.ypt-stat-card {
+  flex: 1;
+  background: var(--background-secondary);
+  border-radius: var(--ypt-radius);
+  padding: 12px 6px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ypt-stat-value {
+  font-size: 1em;
+  font-weight: 700;
+  color: var(--ypt-accent);
+}
+
+.ypt-stat-label {
+  font-size: 0.72em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Heatmap ---------- */
+
+.ypt-section-label {
+  font-size: 0.75em;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 4px;
+}
+
+.ypt-heatmap {
+  display: grid;
+  grid-template-rows: repeat(7, 1fr);
+  grid-auto-flow: column;
+  gap: 3px;
+}
+
+.ypt-heat-cell {
+  width: 11px;
+  height: 11px;
+  border-radius: 3px;
+  background: var(--background-modifier-border);
+}
+
+.ypt-heat-1 { background: var(--ypt-accent-25); }
+.ypt-heat-2 { background: var(--ypt-accent-50); }
+.ypt-heat-3 { background: var(--ypt-accent-75); }
+.ypt-heat-4 { background: var(--ypt-accent); }
+
+/* ---------- Botão de abrir o calendário ---------- */
+
+.ypt-cal-open-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.ypt-cal-open-btn {
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 0.85em;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.ypt-cal-open-btn:hover {
+  border-color: var(--ypt-accent);
+  color: var(--ypt-accent);
+}
+
+/* ---------- Calendário (modal) ---------- */
+
+.ypt-calendar-modal .modal-content {
+  max-width: 480px;
+}
+
+.ypt-cal-root {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ypt-cal-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ypt-cal-title {
+  flex: 1;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.05em;
+}
+
+.ypt-cal-nav {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  font-size: 1.3em;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 2px 8px;
+}
+
+.ypt-cal-nav:hover {
+  color: var(--ypt-accent);
+  background: transparent;
+}
+
+.ypt-cal-today-btn {
+  font-size: 0.72em;
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+.ypt-cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 0.68em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.ypt-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.ypt-cal-cell {
+  position: relative;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 3px;
+  padding: 5px 2px 3px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.ypt-cal-cell:hover {
+  background: var(--background-secondary);
+}
+
+.ypt-cal-cell.ypt-cal-outside {
+  opacity: 0.32;
+}
+
+.ypt-cal-cell.ypt-cal-today .ypt-cal-daynum {
+  color: var(--ypt-accent);
+  font-weight: 700;
+}
+
+.ypt-cal-cell.ypt-cal-selected {
+  border-color: var(--ypt-accent);
+  background: var(--ypt-accent-15);
+}
+
+.ypt-cal-daynum {
+  font-size: 0.82em;
+}
+
+.ypt-cal-dots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px;
+  max-width: 100%;
+}
+
+.ypt-cal-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex: none;
+}
+
+.ypt-cal-agenda-flag {
+  position: absolute;
+  top: 3px;
+  right: 4px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  border: 1px solid var(--ypt-accent);
+  background: transparent;
+}
+
+.ypt-cal-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid var(--background-modifier-border);
+  padding-top: 12px;
+}
+
+.ypt-cal-detail-date {
+  font-weight: 700;
+  font-size: 0.95em;
+}
+
+.ypt-agenda-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--background-secondary);
+  border-radius: var(--ypt-radius);
+  padding: 10px 12px;
+}
+
+.ypt-agenda-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85em;
+}
+
+.ypt-agenda-row.ypt-agenda-done .ypt-agenda-text {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.ypt-agenda-text {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
